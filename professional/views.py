@@ -32,7 +32,7 @@ def professional_with_id_controller(request: Request, professional_id: int) -> R
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
-def list_all_professionals(request: Request) -> Response:
+def list_all_professionals(_request: Request) -> Response:
     professionals = Professional.objects.all()
     serialized_professionals = ProfessionalSerializer(professionals, many=True)
     return Response(serialized_professionals.data, status=status.HTTP_200_OK)
@@ -47,7 +47,7 @@ def create_professional(request: Request) -> Response:
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-def find_professional_by_id(request: Request, professional_id: int) -> Response:
+def find_professional_by_id(_request: Request, professional_id: int) -> Response:
     try:
         professional = Professional.objects.get(pk=professional_id)
         serialized_professional = ProfessionalSerializer(professional)
@@ -57,7 +57,7 @@ def find_professional_by_id(request: Request, professional_id: int) -> Response:
         return Response({'message': 'professional not found!'}, status=status.HTTP_404_NOT_FOUND)
 
 
-def delete_professional_by_id(request: Request, professional_id: int) -> Response:
+def delete_professional_by_id(_request: Request, professional_id: int) -> Response:
     try:
         professional = Professional.objects.get(pk=professional_id)
         professional.delete()

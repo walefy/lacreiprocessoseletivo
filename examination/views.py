@@ -11,8 +11,7 @@ from professional.models import Professional
 @api_view(['GET', 'POST'])
 def examination_general_controller(request: Request) -> Response:
     methods = {
-        'GET': todo,
-        'POST': todo
+        'GET': find_all_examination,
     }
 
     if request.method in methods:
@@ -52,8 +51,15 @@ def create_examination(request: Request, professional: Professional) -> Response
     return Response(examination.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-def find_all_examinations_by_professional_id(request: Request, professional: Professional) -> Response:
+def find_all_examinations_by_professional_id(_request: Request, professional: Professional) -> Response:
     examinations = Examination.objects.filter(professional=professional)
+    serialized_examinations = ExaminationSerializer(examinations, many=True)
+
+    return Response(serialized_examinations.data, status=status.HTTP_200_OK)
+
+
+def find_all_examination(_request: Request) -> Response:
+    examinations = Examination.objects.all()
     serialized_examinations = ExaminationSerializer(examinations, many=True)
 
     return Response(serialized_examinations.data, status=status.HTTP_200_OK)

@@ -12,4 +12,8 @@ class Professional(models.Model):
     contact = models.CharField(max_length=255)
 
     def __str__(self):
-        return f'Professional(full_name={self.full_name}, profession={self.profession}, address={self.address}, contact={self.contact})'
+        return (f'Professional(full_name={self.full_name},'
+                f'profession={self.profession},'
+                f'address={self.address},'
+                f'contact={self.contact})'
+                )
