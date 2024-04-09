@@ -11,8 +11,8 @@ from professional.models import Professional
 @api_view(['GET', 'POST'])
 def examination_general_controller(request: Request) -> Response:
     methods = {
-        'GET': lambda: print(),
-        'POST': lambda: print()
+        'GET': todo,
+        'POST': todo
     }
 
     if request.method in methods:
@@ -24,28 +24,40 @@ def examination_general_controller(request: Request) -> Response:
 @api_view(['GET', 'POST'])
 def examination_with_professional_id_controller(request: Request, professional_id: int) -> Response:
     methods = {
-        'GET': lambda: print(),
+        'GET': find_all_examinations_by_professional_id,
         'POST': create_examination
     }
-
-    if request.method in methods:
-        return methods[request.method](request, professional_id)
-    else:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-
-def create_examination(request: Request, professional_id: int) -> Response:
     try:
         professional = Professional.objects.get(pk=professional_id)
-        examination_payload = request.data
-        examination_payload['professional'] = professional_id
 
-        examination = ExaminationSerializer(data=examination_payload)
+        if request.method in methods:
+            return methods[request.method](request, professional)
+        else:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
-        if examination.is_valid():
-            examination.save()
-            return Response(status=status.HTTP_200_OK)
-
-        return Response(status=status.HTTP_400_BAD_REQUEST)
     except Professional.DoesNotExist:
         return Response({'message': 'Professional not found!'}, status=status.HTTP_404_NOT_FOUND)
+
+
+def create_examination(request: Request, professional: Professional) -> Response:
+    examination_payload = request.data
+    examination_payload['professional'] = professional.pk
+
+    examination = ExaminationSerializer(data=examination_payload)
+
+    if examination.is_valid():
+        examination.save()
+        return Response(examination.data, status=status.HTTP_200_OK)
+
+    return Response(examination.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def find_all_examinations_by_professional_id(request: Request, professional: Professional) -> Response:
+    examinations = Examination.objects.filter(professional=professional)
+    serialized_examinations = ExaminationSerializer(examinations, many=True)
+
+    return Response(serialized_examinations.data, status=status.HTTP_200_OK)
+
+
+def todo(request):
+    return Response()

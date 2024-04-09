@@ -30,6 +30,7 @@
     <connection id="64b0830b-0f3d-4dd0-bbbd-da24d950fc68" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="64b0830b-0f3d-4dd0-bbbd-da24d950fc68" dataset="main.examinations" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="64b0830b-0f3d-4dd0-bbbd-da24d950fc68" dataset="main.professionals" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
