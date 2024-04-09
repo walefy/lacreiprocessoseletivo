@@ -17,3 +17,12 @@ class Professional(models.Model):
                 f'address={self.address},'
                 f'contact={self.contact})'
                 )
+
+    def to_dict(self):
+        return {
+            'full_name': self.full_name,
+            'social_name': self.social_name,
+            'profession': self.profession,
+            'address': self.address,
+            'contact': self.contact
+        }
