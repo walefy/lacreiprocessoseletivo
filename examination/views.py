@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.request import Request
 
 from examination.models import Examination
-from examination.serializers import ExaminationSerializer, ExaminationCreationSerializer
+from examination.serializers import ExaminationSerializer
 from professional.models import Professional
 
 
@@ -64,7 +64,7 @@ def create_examination(request: Request, professional: Professional) -> Response
     examination_payload = request.data
     examination_payload['professional'] = professional.pk
 
-    examination = ExaminationCreationSerializer(data=examination_payload)
+    examination = ExaminationSerializer(data=examination_payload)
 
     if examination.is_valid():
         examination.save()
