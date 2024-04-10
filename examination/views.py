@@ -68,7 +68,7 @@ def create_examination(request: Request, professional: Professional) -> Response
 
     if examination.is_valid():
         examination.save()
-        return Response(examination.data, status=status.HTTP_200_OK)
+        return Response(examination.data, status=status.HTTP_201_CREATED)
 
     return Response(examination.errors, status=status.HTTP_400_BAD_REQUEST)
 
