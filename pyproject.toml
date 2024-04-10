@@ -5,11 +5,18 @@ description = ""
 authors = ["walefy <walefyd1@gmail.com>"]
 readme = "README.md"
 
+
+[tool.taskipy.tasks]
+dev = "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+
+
 [tool.poetry.dependencies]
 python = "^3.10"
 djangorestframework = "^3.15.1"
 django-filter = "^24.2"
 markdown = "^3.6"
+taskipy = "^1.12.2"
+psycopg2-binary = "^2.9.9"
 
 
 [build-system]

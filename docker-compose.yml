@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  backend:
+    build: .
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./:/app
+    environment:
+      DB_HOST: database
+      DB_NAME: lacrei
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_PORT: 5432
+    depends_on:
+      - database
+
+  database:
+    image: postgres
+    container_name: blogs-api-database
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: lacrei
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      timeout: 10s
+      retries: 5
